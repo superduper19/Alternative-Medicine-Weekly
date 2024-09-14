@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="./main.css" rel="stylesheet" />
+    <title>Alternative Medicine Weekly</title>
+</head>
+
+<body>
+    <header class="header">
+        <img src="./v110_191.png" alt="Alternative medicine Logo" class="logo" />
+        <span class="logo__text">Alternamtive Medicine Weekly</span>
+    </header>
+    <section class="body__section">
+        <h3 class="CTA">
+            Get The Most Important Alternative Medicine News Each Week
+        </h3>
+        <form id="subscribeForm" class="input__container">
+            <input type="email" id="emailInput" name="email" class="input" placeholder="Enter your email address" required />
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
+        <div id="confirmationMessage" class="hidden">
+            <h2>Thank you for subscribing!</h2>
+            <p>A confirmation email has been sent to your inbox.</p>
+        </div>
+        <p class="text">
+            With all of the pharmaceutical medicines being pushed upon us, its easy to forget that nature provides the best medicine. We bring you the latest studies on plant medicine.
+        </p>
+    </section>
+    <footer class="footer">
+        <p class="copyright">&copy; 2024. All rights reserved.</p>
+        <div class="footer__div">
+            <a href="./privacy.html" rel="noreferrer">Privacy</a>
+            <a href="./terms.html" rel="noreferrer">Terms of use</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your user ID
+        (function() {
+            emailjs.init("H_PlA1GEce-S9Hcpg"); // Replace with your actual EmailJS user ID
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('subscribeForm');
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const serviceID = "service_xc591a7"
+            const templateId = "template_a5i1178"
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const email = document.getElementById('emailInput').value;
+
+                // Send email using EmailJS
+                emailjs.send(serviceID, templateId, {
+                        to_email: email,
+                        reply_to: "alternativemedicineweekly@gmail.com",
+                        from_name: email, //this is being handled on the template and changed to "Alternamtive Medicine Weekly"
+                        // Add any other template parameters here
+                    })
+                    .then(function(response) {
+                        console.log('Email sent successfully:', response);
+                        // Show confirmation message
+                        form.style.display = 'none';
+                        confirmationMessage.classList.remove('hidden');
+                    }, function(error) {
+                        console.error('Email sending failed:', error);
+                        alert('There was an error sending the confirmation email. Please try again later!.');
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
